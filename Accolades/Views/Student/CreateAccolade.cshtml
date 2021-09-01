@@ -1,0 +1,28 @@
+﻿@model Accolades.ViewModels.FileUploadViewModel
+
+@{
+    ViewData["Title"] = "Create Accolade";
+}
+
+<h1>Create</h1>
+
+<h4>File Upload</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Student" asp-action="CreateAccolade" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="File" class="form-control-file" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

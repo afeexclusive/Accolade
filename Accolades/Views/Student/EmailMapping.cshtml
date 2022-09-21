@@ -3,8 +3,7 @@
 @{
     ViewData["Title"] = "Email Mapping";
 
-    List<string> Headers = ViewBag.Headings;
-}
+    List<string> Headers = ViewBag.Headings;}
 
 <h1>Mapping</h1>
 
@@ -20,7 +19,7 @@
 
                     <div class="form-group">
                         <label asp-for="FirstName" class="control-label"></label>
-                        <select asp-for="FirstName" class="form-control">
+                        <select id="ddlCustomers" asp-for="FirstName" class="form-control">
                             @foreach (var item in Headers)
                             {
                                 <option value="@item">@item</option>
@@ -32,7 +31,7 @@
 
                     <div class="form-group">
                         <label asp-for="LastName" class="control-label"></label>
-                        <select asp-for="LastName" class="form-control">
+                        <select id="ddlCustomersaa" asp-for="LastName" class="form-control">
                             @foreach (var item in Headers)
                             {
                                 <option value="@item">@item</option>
@@ -66,7 +65,7 @@
                 </div>
 
                 <div class="col-md-4 offset-1">
-                    
+
 
                 </div>
 
@@ -85,4 +84,13 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src=https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#ddlCustomers").select2();
+            $("#ddlCustomersaa").select2();
+        });
+    </script>
+    }

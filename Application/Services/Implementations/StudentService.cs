@@ -76,6 +76,56 @@ namespace Application.Services.Implementations
             return new ResponseViewModel { Response = "Uploaded file is empty", Status = false };
         }
 
+
+        public List<CorpMemberDefualtData> UploadCorperData(IFormFile file)
+        {
+
+            if (file.Length > 0)
+            {
+                if (file.FileName.EndsWith(".csv"))
+                {
+                    try
+                    {
+                        using (var reader = new StreamReader(file.OpenReadStream()))
+                        using (var csv = new CsvReader(reader))
+                        {
+
+                            //csv.Configuration.BadDataFound = null;
+                            //csv.Configuration.HeaderValidated = null;
+                            //csv.Configuration.MissingFieldFound = null;
+
+                            var records = csv.GetRecords<CorpMember>().ToList();
+                            var groupedRec = records.GroupBy(x => x.StateCode);
+                            
+                            List<CorpMemberDefualtData> defualtDatas = new List<CorpMemberDefualtData>();
+                            foreach (var item in groupedRec)
+                            {
+                                var firstRec = item.First();
+                                defualtDatas.Add(new CorpMemberDefualtData
+                                {
+                                    StateCode = item.Key,
+                                    LastName = firstRec.LastName,
+                                    LGA = firstRec.LGA,
+                                    OtherNames = firstRec.OtherNames,
+                                    PhoneNumber = firstRec.PhoneNumber,
+                                    Months = string.Join(", ", item.Select(x=>x.Month).ToList())
+
+                                });
+                            }
+
+                            return defualtDatas;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return null;
+                    }
+                }
+                return null;
+            }
+            return null;
+        }
+
         public ResponseViewModel UpdateStudentEmail(Student model, string userId)
         {
 

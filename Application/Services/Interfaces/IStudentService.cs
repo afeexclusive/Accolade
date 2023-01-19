@@ -19,6 +19,7 @@ namespace Application.Services.Interfaces
         List<EmailHeadingVM> GetEmailHeaders(string userID);
         Task<List<string>> ReadAccolades(IFormFile file, string userId);
         ResponseViewModel UpdateStudentEmail(Student model, string userId);
+        List<CorpMemberDefualtData> UploadCorperData(IFormFile file);
         ResponseViewModel UploadStudentData(Student model, string userId);
     }
 }

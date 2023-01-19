@@ -1,0 +1,105 @@
+﻿@model Accolades.ViewModels.FileUploadViewModel
+
+
+@{
+    ViewData["Title"] = "Upload Defaulters here";
+    List<CorpMemberDefualtData> dataC = ViewBag.corperData;
+    string downloadable = Newtonsoft.Json.JsonConvert.SerializeObject(dataC);
+}
+
+@{
+    if (dataC == null)
+    {
+        <h1>Create Merged List</h1>
+
+        <h4>CSV Upload</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-controller="Student" asp-action="CreateCorperDefaultList" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input asp-for="File" class="form-control-file" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+    if (dataC != null)
+    {
+        <div class="table table-responsive table--no-card m-b-30">
+            <table id="dtBdcCustomers" class="table table-borderless table-striped table-earning" draggable="true">
+                <thead>
+                    <tr>
+
+                        <th>
+                            State Code
+                        </th>
+
+                        <th>
+                            Surname
+                        </th>
+                        <th>
+                            Other Names
+                        </th>
+                        <th>
+                            Phone Number
+                        </th>
+                        <th>
+                            LGA
+                        </th>
+                        <th>
+                            Months
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in dataC)
+                    {
+                        <tr>
+
+                            <td>
+                                @item.StateCode
+                            </td>
+
+                            <td>
+                                @item.LastName
+                            </td>
+                            <td>
+                                @item.OtherNames
+                            </td>
+                            <td>
+                                @item.PhoneNumber
+                            </td>
+                            <td>
+                                @item.LGA
+                            </td>
+                            <td>
+                                @item.Months
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @using (Html.BeginForm("DownloadExcel", "Student", FormMethod.Post))
+        {
+            @Html.Hidden("model", downloadable)
+            <input type="submit" value="Generate Excel" />
+        }
+    }
+
+
+}
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

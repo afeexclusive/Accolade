@@ -29,6 +29,7 @@ namespace Accolades
             services.AddControllersWithViews();
             services.AddTransient<ICertificateService, CertificateService>();
             services.AddTransient<IStudentService, StudentService>();
+            services.AddTransient<IEmailService, EmailService>();
             services.AddTransient(typeof(IStorageBroker<>), typeof(StorageBroker<>));
         }
 
